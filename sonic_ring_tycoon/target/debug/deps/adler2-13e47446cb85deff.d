@@ -1,0 +1,6 @@
+C:\Rust\Sonic-Ring-Collector-Tycoon\sonic_ring_tycoon\target\debug\deps\adler2-13e47446cb85deff.d: C:\Users\joshu\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\adler2-2.0.1\src\lib.rs C:\Users\joshu\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\adler2-2.0.1\src\algo.rs
+
+C:\Rust\Sonic-Ring-Collector-Tycoon\sonic_ring_tycoon\target\debug\deps\libadler2-13e47446cb85deff.rmeta: C:\Users\joshu\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\adler2-2.0.1\src\lib.rs C:\Users\joshu\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\adler2-2.0.1\src\algo.rs
+
+C:\Users\joshu\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\adler2-2.0.1\src\lib.rs:
+C:\Users\joshu\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\adler2-2.0.1\src\algo.rs:
