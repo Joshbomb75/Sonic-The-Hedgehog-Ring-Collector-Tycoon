@@ -26,13 +26,14 @@ impl eframe::App for MyApp {
             if ui
                 .button(format!(
                     "Increase Multiplier! ({}/{} rings)",
-                    self.game.rings, 50
+                    self.game.rings, self.game.multiplier_cost
                 ))
                 .clicked()
-                && self.game.rings >= 50
+                && self.game.rings >= self.game.multiplier_cost
             {
-                self.game.rings -= 50;
+                self.game.rings -= self.game.multiplier_cost;
                 self.game.multiplier += 1;
+                self.game.multiplier_cost += 10;
             }
         });
 
