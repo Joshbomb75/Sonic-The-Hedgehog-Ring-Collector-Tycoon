@@ -43,13 +43,13 @@ impl eframe::App for MyApp {
                 self.game.knuckles_collector_amount * self.game.knuckles_collection_rate;
             if passive_rings_per_second > 0 {
                 ui.label(format!(
-                    "Passive Rings per Second: {}",
+                    "Total Passive Rings per Second: {}",
                     passive_rings_per_second
                 ));
             }
             if self.game.knuckles_collector_amount > 0 {
                 ui.label(format!(
-                    "Knuckles Collection Rate: {}",
+                    "Knuckles Rings per Second: {}",
                     self.game.knuckles_collector_amount * self.game.knuckles_collection_rate
                 ));
             }
@@ -74,7 +74,7 @@ impl eframe::App for MyApp {
             // Knuckles button (auto-collector)
             let knuckles_button_text = if self.game.knuckles_collector_amount == 0 {
                 format!(
-                    "Enlist Knuckles' Help! ({}/{} rings)",
+                    "Enlist Knuckles' Help to Dig for Rings! ({}/{} rings)",
                     self.game.rings, self.game.knuckles_cost
                 )
             } else {
