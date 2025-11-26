@@ -12,10 +12,10 @@ impl Default for GameState {
         Self {
             rings: 0,
             multiplier: 1,
-            multiplier_upgrade_cost: 50,
+            multiplier_upgrade_cost: 10,
             knuckles_num_collectors: 0,
             knuckles_collection_rate: 1,
-            knuckles_upgrade_cost: 30,
+            knuckles_upgrade_cost: 10,
         }
     }
 }
@@ -49,5 +49,13 @@ impl GameState {
         } else {
             println!("Not enough rings to increase knuckles collectors");
         }
+    }
+
+    pub fn get_passive_rings_per_second(&self) -> u64 {
+        self.get_knuckles_rings_per_second()
+    }
+
+    pub fn get_knuckles_rings_per_second(&self) -> u64 {
+        self.knuckles_num_collectors * self.knuckles_collection_rate
     }
 }

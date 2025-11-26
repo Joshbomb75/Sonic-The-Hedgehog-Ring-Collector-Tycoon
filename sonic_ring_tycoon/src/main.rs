@@ -40,8 +40,7 @@ impl eframe::App for MyApp {
             ui.heading("💍 Sonic Ring Tycoon 💍");
             ui.label(format!("Rings: {}", self.game.rings));
             ui.label(format!("Multiplier: {}", self.game.multiplier));
-            let passive_rings_per_second =
-                self.game.knuckles_num_collectors * self.game.knuckles_collection_rate;
+            let passive_rings_per_second = self.game.get_passive_rings_per_second();
             if passive_rings_per_second > 0 {
                 ui.label(format!(
                     "Total Passive Rings per Second: {}",
@@ -51,7 +50,7 @@ impl eframe::App for MyApp {
             if self.game.knuckles_num_collectors > 0 {
                 ui.label(format!(
                     "Knuckles Rings per Second: {}",
-                    self.game.knuckles_num_collectors * self.game.knuckles_collection_rate
+                    self.game.get_knuckles_rings_per_second()
                 ));
             }
 
