@@ -76,7 +76,7 @@ impl GameState {
         }
     }
 
-    pub fn double_knuckles_collection_rate(&mut self) {
+    pub fn increase_knuckles_collection_rate(&mut self) {
         if self.rings >= self.knuckles_collection_rate_upgrade_cost {
             self.rings -= self.knuckles_collection_rate_upgrade_cost;
             self.knuckles_collection_rate += 1;

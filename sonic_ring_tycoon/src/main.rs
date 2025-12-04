@@ -84,7 +84,7 @@ impl eframe::App for MyApp {
                         .button(self.game.knuckles_collection_rate_upgrade_button_label())
                         .clicked()
                 {
-                    self.game.double_knuckles_collection_rate();
+                    self.game.increase_knuckles_collection_rate();
                 }
             });
             // Chili Dog button (auto-collector)
