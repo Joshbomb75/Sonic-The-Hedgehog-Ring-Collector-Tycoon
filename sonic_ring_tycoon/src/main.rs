@@ -73,6 +73,13 @@ impl eframe::App for MyApp {
             if ui.button(knuckles_button_text).clicked() {
                 self.game.increase_knuckles_collectors();
             }
+            // Knuckles upgrade button
+            if ui
+                .button(self.game.knuckles_collection_rate_upgrade_button_label())
+                .clicked()
+            {
+                self.game.double_knuckles_collection_rate();
+            }
             // Chili Dog button (auto-collector)
             let chili_dog_button_text = self.game.chili_dog_button_label();
             if ui.button(chili_dog_button_text).clicked() {

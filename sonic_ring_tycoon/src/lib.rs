@@ -8,6 +8,7 @@ pub struct GameState {
     pub knuckles_num_collectors: u64,
     pub knuckles_collection_rate: u64,
     pub knuckles_add_collector_cost: u64,
+    pub knuckles_collection_rate_upgrade_cost: u64,
     pub chili_dog_num_collectors: u64,
     pub chili_dog_collection_rate: u64,
     pub chili_dog_add_collector_cost: u64,
@@ -23,6 +24,7 @@ impl Default for GameState {
             knuckles_num_collectors: 0,
             knuckles_collection_rate: 1,
             knuckles_add_collector_cost: 10,
+            knuckles_collection_rate_upgrade_cost: 100,
             chili_dog_num_collectors: 0,
             chili_dog_collection_rate: 10,
             chili_dog_add_collector_cost: 50,
@@ -74,6 +76,22 @@ impl GameState {
         }
     }
 
+    pub fn double_knuckles_collection_rate(&mut self) {
+        if self.rings >= self.knuckles_collection_rate_upgrade_cost {
+            self.rings -= self.knuckles_collection_rate_upgrade_cost;
+            self.knuckles_collection_rate += 1;
+            self.knuckles_collection_rate_upgrade_cost =
+                (self.knuckles_collection_rate_upgrade_cost as f64 * CONST_GROWTH_FACTOR).round()
+                    as u64;
+            println!(
+                "Knuckles collection rate increased to {}",
+                self.knuckles_collection_rate
+            );
+        } else {
+            println!("Not enough rings to increase knuckles collection rate");
+        }
+    }
+
     pub fn increase_chili_dog_collectors(&mut self) {
         if self.rings >= self.chili_dog_add_collector_cost {
             self.rings -= self.chili_dog_add_collector_cost;
@@ -113,6 +131,13 @@ impl GameState {
                 self.rings, self.knuckles_add_collector_cost
             )
         }
+    }
+
+    pub fn knuckles_collection_rate_upgrade_button_label(&self) -> String {
+        format!(
+            "Upgrade Knuckles' Gloves to Increase Collection Rate! ({}/{})",
+            self.rings, self.knuckles_collection_rate_upgrade_cost
+        )
     }
 
     pub fn chili_dog_button_label(&self) -> String {
