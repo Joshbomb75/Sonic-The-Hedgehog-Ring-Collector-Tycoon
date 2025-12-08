@@ -87,12 +87,24 @@ impl eframe::App for MyApp {
                     self.game.increase_knuckles_collection_rate();
                 }
             });
-            // Chili Dog button (auto-collector)
-            let chili_dog_button_text = self.game.chili_dog_button_label();
-            if self.game.knuckles_collection_rate > 1 && ui.button(chili_dog_button_text).clicked()
-            {
-                self.game.increase_chili_dog_collectors();
-            }
+            // Chili Dog button and upgrade button side by side
+            ui.horizontal(|ui| {
+                // Chili Dog button
+                let chili_dog_button_text = self.game.chili_dog_button_label();
+                if self.game.knuckles_collection_rate > 1
+                    && ui.button(chili_dog_button_text).clicked()
+                {
+                    self.game.increase_chili_dog_collectors();
+                }
+                // Chili Dog upgrade button
+                if self.game.chili_dog_num_collectors > 0
+                    && ui
+                        .button(self.game.chili_dog_collection_rate_upgrade_button_label())
+                        .clicked()
+                {
+                    self.game.increase_chili_dog_collection_rate();
+                }
+            });
         });
 
         ctx.request_repaint(); // refresh loop
