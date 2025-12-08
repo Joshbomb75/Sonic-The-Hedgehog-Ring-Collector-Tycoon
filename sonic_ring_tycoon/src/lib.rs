@@ -12,6 +12,7 @@ pub struct GameState {
     pub chili_dog_num_collectors: u64,
     pub chili_dog_collection_rate: u64,
     pub chili_dog_add_collector_cost: u64,
+    pub chili_dog_collection_rate_upgrade_cost: u64,
     pub last_collect: Instant,
 }
 
@@ -27,7 +28,8 @@ impl Default for GameState {
             knuckles_collection_rate_upgrade_cost: 100,
             chili_dog_num_collectors: 0,
             chili_dog_collection_rate: 10,
-            chili_dog_add_collector_cost: 50,
+            chili_dog_add_collector_cost: 75,
+            chili_dog_collection_rate_upgrade_cost: 750,
             last_collect: Instant::now(),
         }
     }
@@ -107,6 +109,22 @@ impl GameState {
         }
     }
 
+    pub fn increase_chili_dog_collection_rate(&mut self) {
+        if self.rings >= self.chili_dog_collection_rate_upgrade_cost {
+            self.rings -= self.chili_dog_collection_rate_upgrade_cost;
+            self.chili_dog_collection_rate += 10;
+            self.chili_dog_collection_rate_upgrade_cost =
+                (self.chili_dog_collection_rate_upgrade_cost as f64 * CONST_GROWTH_FACTOR).round()
+                    as u64;
+            println!(
+                "Chili dog collection rate increased to {}",
+                self.chili_dog_collection_rate
+            );
+        } else {
+            println!("Not enough rings to increase chili dog collection rate");
+        }
+    }
+
     pub fn get_passive_rings_per_second(&self) -> u64 {
         self.get_knuckles_rings_per_second() + self.get_chili_dog_rings_per_second()
     }
@@ -152,5 +170,12 @@ impl GameState {
                 self.rings, self.chili_dog_add_collector_cost
             )
         }
+    }
+
+    pub fn chili_dog_collection_rate_upgrade_button_label(&self) -> String {
+        format!(
+            "Add a New Topping to the Chili Dog Cart to Increase Collection Rate! ({}/{})",
+            self.rings, self.chili_dog_collection_rate_upgrade_cost
+        )
     }
 }
