@@ -180,7 +180,7 @@ impl GameState {
 
     pub fn chili_dog_collection_rate_upgrade_button_label(&self) -> String {
         format!(
-            "Add a New Topping to the Chili Dog Cart to Increase Collection Rate! ({}/{})",
+            "Add a New Topping to Increase Collection Rate! ({}/{})",
             self.rings, self.chili_dog_collection_rate_upgrade_cost
         )
     }
@@ -224,7 +224,7 @@ impl GameState {
             )
         } else {
             format!(
-                "Ask Tails to Build Another Flying Ring Magnet Drone! ({}/{})",
+                "Ask Tails to Build Another Drone! ({}/{})",
                 self.rings, self.tails_add_collector_cost
             )
         }

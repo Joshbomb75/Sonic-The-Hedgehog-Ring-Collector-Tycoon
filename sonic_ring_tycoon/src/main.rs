@@ -35,23 +35,29 @@ impl eframe::App for MyApp {
                 ));
                 // knuckles rings per second
                 if self.game.knuckles_num_collectors > 0 {
+                    let knuckles_rings_per_second = self.game.get_knuckles_rings_per_second();
                     ui.label(format!(
-                        "Knuckles Rings per Second: {}",
-                        self.game.get_knuckles_rings_per_second()
+                        "Knuckles Rings per Second: {} ({:.1}% rps)",
+                        knuckles_rings_per_second,
+                        knuckles_rings_per_second as f64 / passive_rings_per_second as f64 * 100.0
                     ));
                 }
                 // chili dog rings per second
                 if self.game.chili_dog_num_collectors > 0 {
+                    let chili_dog_rings_per_second = self.game.get_chili_dog_rings_per_second();
                     ui.label(format!(
-                        "Chili Dog Cart Rings per Second: {}",
-                        self.game.get_chili_dog_rings_per_second()
+                        "Chili Dog Cart Rings per Second: {} ({:.1}% rps)",
+                        chili_dog_rings_per_second,
+                        chili_dog_rings_per_second as f64 / passive_rings_per_second as f64 * 100.0
                     ));
                 }
                 // tails rings per second
                 if self.game.tails_num_collectors > 0 {
+                    let tails_rings_per_second = self.game.get_tails_rings_per_second();
                     ui.label(format!(
-                        "Tails' Ring Magnet Drone Rings per Second: {}",
-                        self.game.get_tails_rings_per_second()
+                        "Tails' Ring Magnet Drone Rings per Second: {} ({:.1}% rps)",
+                        tails_rings_per_second,
+                        tails_rings_per_second as f64 / passive_rings_per_second as f64 * 100.0
                     ));
                 }
             }
