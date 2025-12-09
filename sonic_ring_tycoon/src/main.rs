@@ -96,11 +96,11 @@ impl eframe::App for MyApp {
                 // Knuckles button (auto-collector)
                 let can_afford_knuckles = self.game.rings >= self.game.knuckles_add_collector_cost;
                 let knuckles_button_text = self.game.knuckles_button_label();
-                let increase_knuckles_button = egui::Button::new(knuckles_button_text);
+                let knuckles_button = egui::Button::new(knuckles_button_text);
                 let knuckles_unlocked = self.game.multiplier > 1;
                 if knuckles_unlocked
                     && ui
-                        .add_enabled(can_afford_knuckles, increase_knuckles_button)
+                        .add_enabled(can_afford_knuckles, knuckles_button)
                         .clicked()
                 {
                     self.game.increase_knuckles_collectors();
@@ -123,16 +123,29 @@ impl eframe::App for MyApp {
             // Chili Dog button and upgrade button side by side
             ui.horizontal(|ui| {
                 // Chili Dog button
+                let can_afford_chili_dog =
+                    self.game.rings >= self.game.chili_dog_add_collector_cost;
                 let chili_dog_button_text = self.game.chili_dog_button_label();
-                if self.game.knuckles_collection_rate > KNUCKLES_BASE_COLLECTION_RATE
-                    && ui.button(chili_dog_button_text).clicked()
+                let chili_dog_button = egui::Button::new(chili_dog_button_text);
+                let chili_dog_unlocked =
+                    self.game.knuckles_collection_rate > KNUCKLES_BASE_COLLECTION_RATE;
+                if chili_dog_unlocked
+                    && ui
+                        .add_enabled(can_afford_chili_dog, chili_dog_button)
+                        .clicked()
                 {
                     self.game.increase_chili_dog_collectors();
                 }
                 // Chili Dog upgrade button
-                if self.game.chili_dog_num_collectors > 0
+                let can_afford_chili_dog_upgrade =
+                    self.game.rings >= self.game.chili_dog_collection_rate_upgrade_cost;
+                let chili_dog_upgrade_button_text =
+                    self.game.chili_dog_collection_rate_upgrade_button_label();
+                let chili_dog_upgrade_button = egui::Button::new(chili_dog_upgrade_button_text);
+                let chili_dog_upgrade_unlocked = self.game.chili_dog_num_collectors > 0;
+                if chili_dog_upgrade_unlocked
                     && ui
-                        .button(self.game.chili_dog_collection_rate_upgrade_button_label())
+                        .add_enabled(can_afford_chili_dog_upgrade, chili_dog_upgrade_button)
                         .clicked()
                 {
                     self.game.increase_chili_dog_collection_rate();
