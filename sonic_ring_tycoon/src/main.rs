@@ -1,4 +1,7 @@
-use sonic_ring_tycoon::{CHILI_DOG_BASE_COLLECTION_RATE, GameState, KNUCKLES_BASE_COLLECTION_RATE};
+use sonic_ring_tycoon::{
+    CHILI_DOG_BASE_COLLECTION_RATE, GameState, KNUCKLES_BASE_COLLECTION_RATE,
+    TAILS_BASE_COLLECTION_RATE,
+};
 use std::time::Instant;
 
 fn main() -> eframe::Result<()> {
@@ -134,6 +137,23 @@ impl eframe::App for MyApp {
                         .clicked()
                 {
                     self.game.increase_tails_collection_rate();
+                }
+            });
+            // Chaos emerald button and label side by side
+            ui.horizontal(|ui| {
+                // Chaos emerald button
+                let chaos_emerald_button_text = self.game.chaos_emerald_button_label();
+                if self.game.tails_collection_rate > TAILS_BASE_COLLECTION_RATE
+                    && ui.button(chaos_emerald_button_text).clicked()
+                {
+                    self.game.increase_chaos_emerald_count();
+                }
+                // Chaos emerald count label
+                if self.game.chaos_emerald_count > 0 {
+                    ui.label(format!(
+                        "Chaos Emerald Count: {}",
+                        self.game.chaos_emerald_count
+                    ));
                 }
             });
         });

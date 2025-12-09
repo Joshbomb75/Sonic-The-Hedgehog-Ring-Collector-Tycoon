@@ -12,6 +12,9 @@ pub const CHILI_DOG_BASE_COLLECTION_RATE_UPGRADE_COST: u64 = 500;
 pub const TAILS_BASE_COLLECTION_RATE: u64 = 100;
 pub const TAILS_BASE_ADD_COLLECTOR_COST: u64 = 750;
 pub const TAILS_BASE_COLLECTION_RATE_UPGRADE_COST: u64 = 7500;
+pub const CHAOS_EMERALD_BASE_COST: u64 = 1000000;
+pub const CHAOS_EMERALD_MULTIPLIER: u64 = 2;
+pub const CHAOS_EMERALD_INCREASE_COST_GROWTH_FACTOR: f64 = 1.9;
 
 pub struct GameState {
     pub rings: u64,
@@ -29,6 +32,8 @@ pub struct GameState {
     pub tails_collection_rate: u64,
     pub tails_add_collector_cost: u64,
     pub tails_collection_rate_upgrade_cost: u64,
+    pub chaos_emerald_count: u32,
+    pub chaos_emerald_increase_cost: u64,
     pub last_collect: Instant,
 }
 
@@ -50,6 +55,8 @@ impl Default for GameState {
             tails_collection_rate: TAILS_BASE_COLLECTION_RATE,
             tails_add_collector_cost: TAILS_BASE_ADD_COLLECTOR_COST,
             tails_collection_rate_upgrade_cost: TAILS_BASE_COLLECTION_RATE_UPGRADE_COST,
+            chaos_emerald_count: 0,
+            chaos_emerald_increase_cost: CHAOS_EMERALD_BASE_COST,
             last_collect: Instant::now(),
         }
     }
@@ -237,6 +244,29 @@ impl GameState {
         )
     }
 
+    pub fn increase_chaos_emerald_count(&mut self) {
+        if self.rings >= self.chaos_emerald_increase_cost {
+            self.rings -= self.chaos_emerald_increase_cost;
+            self.chaos_emerald_count += 1;
+            self.chaos_emerald_increase_cost = (self.chaos_emerald_increase_cost as f64
+                * CHAOS_EMERALD_INCREASE_COST_GROWTH_FACTOR)
+                .round() as u64;
+            println!(
+                "Chaos emerald count increased to {}",
+                self.chaos_emerald_count
+            );
+        } else {
+            println!("Not enough rings to increase chaos emerald count");
+        }
+    }
+
+    pub fn chaos_emerald_button_label(&self) -> String {
+        format!(
+            "Obtain a Chaos Emerald (Double All Collection Rates)! ({}/{})",
+            self.rings, self.chaos_emerald_increase_cost
+        )
+    }
+
     pub fn get_passive_rings_per_second(&self) -> u64 {
         self.get_knuckles_rings_per_second()
             + self.get_chili_dog_rings_per_second()
@@ -244,14 +274,20 @@ impl GameState {
     }
 
     pub fn get_knuckles_rings_per_second(&self) -> u64 {
-        self.knuckles_num_collectors * self.knuckles_collection_rate
+        self.knuckles_num_collectors
+            * self.knuckles_collection_rate
+            * (CHAOS_EMERALD_MULTIPLIER.pow(self.chaos_emerald_count))
     }
 
     pub fn get_chili_dog_rings_per_second(&self) -> u64 {
-        self.chili_dog_num_collectors * self.chili_dog_collection_rate
+        self.chili_dog_num_collectors
+            * self.chili_dog_collection_rate
+            * (CHAOS_EMERALD_MULTIPLIER.pow(self.chaos_emerald_count))
     }
 
     pub fn get_tails_rings_per_second(&self) -> u64 {
-        self.tails_num_collectors * self.tails_collection_rate
+        self.tails_num_collectors
+            * self.tails_collection_rate
+            * (CHAOS_EMERALD_MULTIPLIER.pow(self.chaos_emerald_count))
     }
 }
