@@ -33,7 +33,7 @@ pub struct GameState {
     pub tails_add_collector_cost: u64,
     pub tails_collection_rate_upgrade_cost: u64,
     pub chaos_emerald_count: u32,
-    pub chaos_emerald_increase_cost: u64,
+    pub chaos_emerald_cost: u64,
     pub last_collect: Instant,
 }
 
@@ -56,7 +56,7 @@ impl Default for GameState {
             tails_add_collector_cost: TAILS_BASE_ADD_COLLECTOR_COST,
             tails_collection_rate_upgrade_cost: TAILS_BASE_COLLECTION_RATE_UPGRADE_COST,
             chaos_emerald_count: 0,
-            chaos_emerald_increase_cost: CHAOS_EMERALD_BASE_COST,
+            chaos_emerald_cost: CHAOS_EMERALD_BASE_COST,
             last_collect: Instant::now(),
         }
     }
@@ -245,10 +245,10 @@ impl GameState {
     }
 
     pub fn increase_chaos_emerald_count(&mut self) {
-        if self.rings >= self.chaos_emerald_increase_cost {
-            self.rings -= self.chaos_emerald_increase_cost;
+        if self.rings >= self.chaos_emerald_cost {
+            self.rings -= self.chaos_emerald_cost;
             self.chaos_emerald_count += 1;
-            self.chaos_emerald_increase_cost = (self.chaos_emerald_increase_cost as f64
+            self.chaos_emerald_cost = (self.chaos_emerald_cost as f64
                 * CHAOS_EMERALD_INCREASE_COST_GROWTH_FACTOR)
                 .round() as u64;
             println!(
@@ -263,7 +263,7 @@ impl GameState {
     pub fn chaos_emerald_button_label(&self) -> String {
         format!(
             "Obtain a Chaos Emerald (Double All Collection Rates)! ({}/{})",
-            self.rings, self.chaos_emerald_increase_cost
+            self.rings, self.chaos_emerald_cost
         )
     }
 

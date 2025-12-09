@@ -154,16 +154,24 @@ impl eframe::App for MyApp {
             // Tails button and upgrade button side by side
             ui.horizontal(|ui| {
                 // Tails button
+                let can_afford_tails = self.game.rings >= self.game.tails_add_collector_cost;
                 let tails_button_text = self.game.tails_button_label();
-                if self.game.chili_dog_collection_rate > CHILI_DOG_BASE_COLLECTION_RATE
-                    && ui.button(tails_button_text).clicked()
-                {
+                let tails_button = egui::Button::new(tails_button_text);
+                let tails_unlocked =
+                    self.game.chili_dog_collection_rate > CHILI_DOG_BASE_COLLECTION_RATE;
+                if tails_unlocked && ui.add_enabled(can_afford_tails, tails_button).clicked() {
                     self.game.increase_tails_collectors();
                 }
                 // Tails upgrade button
-                if self.game.tails_num_collectors > 0
+                let can_afford_tails_upgrade =
+                    self.game.rings >= self.game.tails_collection_rate_upgrade_cost;
+                let tails_upgrade_button_text =
+                    self.game.tails_collection_rate_upgrade_button_label();
+                let tails_upgrade_button = egui::Button::new(tails_upgrade_button_text);
+                let tails_upgrade_unlocked = self.game.tails_num_collectors > 0;
+                if tails_upgrade_unlocked
                     && ui
-                        .button(self.game.tails_collection_rate_upgrade_button_label())
+                        .add_enabled(can_afford_tails_upgrade, tails_upgrade_button)
                         .clicked()
                 {
                     self.game.increase_tails_collection_rate();
@@ -172,9 +180,15 @@ impl eframe::App for MyApp {
             // Chaos emerald button and label side by side
             ui.horizontal(|ui| {
                 // Chaos emerald button
+                let can_afford_chaos_emerald = self.game.rings >= self.game.chaos_emerald_cost;
                 let chaos_emerald_button_text = self.game.chaos_emerald_button_label();
-                if self.game.tails_collection_rate > TAILS_BASE_COLLECTION_RATE
-                    && ui.button(chaos_emerald_button_text).clicked()
+                let chaos_emerald_button = egui::Button::new(chaos_emerald_button_text);
+                let chaos_emerald_unlocked =
+                    self.game.tails_collection_rate > TAILS_BASE_COLLECTION_RATE;
+                if chaos_emerald_unlocked
+                    && ui
+                        .add_enabled(can_afford_chaos_emerald, chaos_emerald_button)
+                        .clicked()
                 {
                     self.game.increase_chaos_emerald_count();
                 }
