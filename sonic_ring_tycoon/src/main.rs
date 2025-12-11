@@ -97,7 +97,7 @@ impl eframe::App for MyApp {
                 let can_afford_knuckles = self.game.rings >= self.game.knuckles_add_collector_cost;
                 let knuckles_button_text = self.game.knuckles_button_label();
                 let knuckles_button = egui::Button::new(knuckles_button_text);
-                let knuckles_unlocked = self.game.multiplier > 1;
+                let knuckles_unlocked = self.game.multiplier > 3;
                 if knuckles_unlocked
                     && ui
                         .add_enabled(can_afford_knuckles, knuckles_button)
@@ -128,7 +128,7 @@ impl eframe::App for MyApp {
                 let chili_dog_button_text = self.game.chili_dog_button_label();
                 let chili_dog_button = egui::Button::new(chili_dog_button_text);
                 let chili_dog_unlocked =
-                    self.game.knuckles_collection_rate > KNUCKLES_BASE_COLLECTION_RATE;
+                    self.game.get_knuckles_rings_per_second() > KNUCKLES_BASE_COLLECTION_RATE * 8;
                 if chili_dog_unlocked
                     && ui
                         .add_enabled(can_afford_chili_dog, chili_dog_button)
