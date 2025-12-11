@@ -1,7 +1,7 @@
 ## Sonic-Ring-Collector-Tycoon
 Joshua Johnson 2025  
   
-Idle game themed around collecting rings in the Sonic the Hedgehog universe!
+Idle clicker game themed around collecting rings in the Sonic the Hedgehog universe!
 
 How to start the game:
 ```rust
